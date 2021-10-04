@@ -1,0 +1,15 @@
+Sys.getlocale()
+Sys.setlocale(category="LC_CTYPE", locale="Korean_Korea.949")
+
+memo <- readLines("/jha/Rexam/data/memo.txt", encoding="UTF-8")
+memo[1] <- gsub("[!@#$%&]", "", memo[1])
+memo[2] <- gsub("e", "E", memo[2])
+memo[3] <- gsub("[1234567890]", "", memo[3])
+memo[4] <- gsub("[^가-힣&^[:space:]]", "", memo[4])
+memo[4] <- gsub("  ", " ", memo[4])
+memo[5] <- gsub("[!<>]|[1234567890]", "", memo[5])
+memo[6] <- gsub(" ", "", memo[6])
+memo[7] <- gsub("YOU", "you", memo[7])
+memo[7] <- gsub("  OK", "ok", memo[7])
+
+write(memo, file="/jha/Rexam/lab/memo_new.txt")

@@ -1,0 +1,6 @@
+iotest2 <- scan("data/iotest2.txt", what="")
+table <- table(iotest2)
+# View(table)
+table <- sort(table, by="Freq")
+# View(table)
+cat("가장 많이 등장한 단어는 ", names(table[length(table)]), "입니다.")
