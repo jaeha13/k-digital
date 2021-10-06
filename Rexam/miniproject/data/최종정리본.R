@@ -7,6 +7,9 @@ library(XML)
 library(leaflet)
 library(htmlwidgets)
 library(webshot)
+library(broom)
+library(tidyverse)
+library(geojsonio)
 
 # install.packages('webshot')
 # install_phantomjs()
@@ -118,19 +121,25 @@ s_time <- sapply(as.data.frame(illegal_data[3]), function(x){gsub(":.{2}", "", x
 # peak_lonlat$lat[is.na(peak_lonlat$lat)] <- gc1$lat
 # rownames(peak_lonlat) <- NULL
 # write.csv(peak_lonlat, 'data/p_time.csv')
+#
+# # 오산시 경계 데이터
+# value = geojson_read('./TL_SCCO_SIG.json', what='sp')
+# Osansi = value[value@data$SIG_KOR_NM == '오산시', ]
+# Osansi_boundary = tidy(Osansi)
+# Osansi_boundary %>% select(long, lat) -> result
+# write.csv(Osansi_boundary, './Osan_Boundary.csv')
 # ##### WRITE 종료 #####
 
 PbPL_data <- read.csv("data/public_parking_lot.csv")[2:5]
 boundary<- read.csv("data/Osan_Boundary.csv")[2:3]
 ILPD <- read.csv("data/illegal_parking_data.csv")
-View()
 
 
 leaflet(ILPD) %>% 
   addTiles() %>%
   setView(lng = 127.05074340714724, lat = 37.16249734350079, zoom = 13) %>% 
   addProviderTiles('CartoDB.Positron') %>% 
-  addPolygons(lat= ~boundary$lat,lng=~boundary$lon, 
+  addPolygons(lat= ~boundary$lat,lng=~boundary$long, 
               color="teal", fill=F) %>%
   addCircles(lng = ~lon, lat = ~lat, weight = 1,
              radius = ~sqrt(Freq) * 30, popup = ~place3, col="red") %>% 
@@ -146,7 +155,7 @@ leaflet(ILPD) %>%
   addTiles() %>%
   setView(lng = 127.05074340714724, lat = 37.16249734350079, zoom = 13) %>% 
   addProviderTiles('CartoDB.Positron') %>% 
-  addPolygons(lat= ~boundary$lat,lng=~boundary$lon, 
+  addPolygons(lat= ~boundary$lat,lng=~boundary$long, 
               color="teal", fill=F) %>%
   addCircles(lng = ~lon, lat = ~lat, weight = 1,
              radius = ~sqrt(Freq) * 30, popup = ~place3, col="red") -> withoutM
