@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        span {
+            color : red;
+        }
+    </style>
+</head>
+<body>
+<h1>HTTP 요청 방식을 파악하자</h1>
+<hr>
+<h2>요청된 방식 :  <span>{{ result }}</span></h2>
+<hr>
+<a href="http://localhost:8000/secondapp/exam2_1/">하이퍼 링크 텍스트로 요청하기</a>
+<hr>
+<form method="GET" action="/secondapp/exam2_1/">
+    <input type="hidden" name="info1" value="django">
+    <input type="hidden" name="info2" value="css">
+    <input type="hidden" name="info3" value="javascript">
+    <input type="submit" value="<form>태그로 GET방식 요청">
+</form>
+<hr>
+<a href="http://localhost:8000/secondapp/exam2_1/">
+           <img src="/static/images/olaf5.png" width="150"></a>
+<hr>
+<form method="POST" action="/secondapp/exam2_1/">
+    {% csrf_token %}
+    <input type="hidden" name="info1" value="django">
+    <input type="hidden" name="info2" value="css">
+    <input type="hidden" name="info3" value="javascript">
+    <input type="submit" value="<form>태그로 POST방식 요청">
+</form>
+<hr>
+</body>
+</html>
